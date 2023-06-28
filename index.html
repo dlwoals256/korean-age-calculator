@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>만 나이: 오늘부터 당신의 나이는?</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Nanum+Gothic&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Nanum Gothic', sans-serif;
+        }
+        #wrap {
+            width: 90vw;
+            margin: 30px auto 0 auto;
+            background-color: #e0e0e0;
+            padding: 20px;
+        }
+        header {
+            height: 15vh;
+        }
+        .title {
+            display: inline-block;
+            width: 100%;
+            padding: 30px 0 0 30px;
+            font-size: 35px;
+        }
+        .calForm {
+            height: 12vh;
+            display: flex;
+            flex-flow: row wrap;
+            justify-content: center;
+        }
+        #inpBirthDate {
+            border: none;
+            width: 50vw;
+            height: 8vh;
+            border-radius: 30px;
+            background: #e0e0e0;
+            box-shadow:  8px 8px 8px #848484,
+             -8px -8px 8px #ffffff;
+            text-align: center;
+            font-size: 30px;
+        }
+        #inpBirthDate::placeholder {
+            font-size: 30px;
+            text-align: center;
+        }
+        .result {
+            height: 20vh;
+            display: flex;
+            flex-flow: row wrap;
+            justify-content: center;
+            align-items: center;
+        }
+        .result > .calAge {
+            font-size: 40px;
+        }
+        .result > .calYearAge {
+            font-size: 30px;
+        }
+        .result > p:first-child {
+            width: 100%;
+            text-align: center;
+            font-size: 35px;
+        }
+        .result > p:last-child {
+            font-size: 25px;
+        }
+        .intro {
+            height: 20vh;
+            font-size: 18px;
+        }
+        .moreArticle {
+            height: 20vh;
+            font-size: 18px;
+        }
+        .thanks {
+            font-size: 25px;
+            text-align: center;
+        }
+        .hidden {
+            display: none !important;
+        }
+    </style>
+</head>
+<body>
+    <div id="wrap">
+        <header>
+            <h2 class="title">만 나이 계산기</h2>
+        </header>
+        <article>
+            <div class="calForm">
+                <form action="">
+                    <input type="text" id="inpBirthDate" name="birthDate" placeholder="YYYYMMDD"
+                    pattern="(?:19|20)\d\d(?:0[1-9]|1[012])(?:0[1-9]|[12][0-9]|3[01])"
+                    title="YYYYMMDD 형식에 맞게 입력해주세요."/>
+
+                </form>
+            </div>
+            <div class="result">
+                <p>
+                    당신의 생일에 근거한 만 나이는 <span class="calAge"></span>세입니다!
+                </p>
+                <p>
+                    연 나이는 <span class="calYearAge"></span>세입니다!
+                </p>
+            </div>
+            <div class="intro">
+                <p>
+                    <span style="font-weight: bold;"> 개정후 민법 제158조(나이의 계산과 표시) </span>
+                    나이는 출생일을 산입하여 만(滿) 나이로 계산하고, 연수(年數)로 표시한다.
+                    다만, 1세에 이르지 아니한 경우에는 월수(月數)로 표시할 수 있다.
+                    [전문개정 2022. 12. 27.] [시행일: 2023. 6. 28.]
+                </p>
+                <p>
+                    지난 2023년 06월 28일부터 시행되는 나이의 계산과 표시에 대한 민법 제158조에
+                    의해 대한민국에서 "세는 나이"가 사라졌습니다.
+                    물론 공식적인 전산 상에서는 만 나이를 사용해왔으나 우리의 일상 속에서
+                    세는 나이는 오랫동안 자리매김 하고 있었습니다.
+                    일상에서도 이젠 만 나이를 사용하기 위한 정부의 노력에 힘입어
+                    여러분의 만 나이 계산을 도와드리겠습니다.
+                </p>
+            </div>
+            <div class="moreArticle">
+                <p>
+                    연 나이는 무엇일까요?
+                    연 나이 역시 나이를 세는 방법 중 하나로, 그저 현재 연도에서 출생 연도를
+                    단순히 빼기만 하면 그것이 연 나이입니다.
+                    (당신은 연 나이로 <span class="calYearAge"></span>살 입니다!)
+                    법적으로는 특정 법률에서만 사용되나 계산법이 간단해
+                    일상에서 쓰기 좋습니다. 생일이 지났는지 알 수 없거나 알지 않아도 되는
+                    상황에서는 편의상 이런 방식을 사용하기도 합니다.
+                    일상에서 당신은 <span class="koreanTraditionalAge"></span>살로 소개하곤
+                    했지만 이제 당신은 <span class="calAge"></span>살로, 
+                    <span class="ageOffset"></span>살 만큼 젊어졌어요! (물론 생물학적으로가 아닙니다.)
+                </p>
+            </div>
+            <div class="thanks">
+                <p>방문해주셔서 감사하고 좋은 하루 되세요!</p>
+            </div>
+        </article>
+    </div>
+    <script>
+        const date = new Date();
+        const form = document.querySelector("form");
+        const calAge = document.querySelectorAll(".calAge");
+        const calYearAge = document.querySelectorAll(".calYearAge");
+        const spanKoreanTraditionalAge = document.querySelector(".koreanTraditionalAge");
+        const result = document.querySelector(".result");
+        const moreArticle = document.querySelector(".moreArticle");
+        const thanks = document.querySelector(".thanks");
+        const ageOffsetSpan = document.querySelector(".ageOffset");
+        result.classList.toggle("hidden");
+        moreArticle.classList.toggle("hidden");
+        thanks.classList.toggle("hidden");
+        const handleSubmit = e => {
+            e.preventDefault();
+            const birthDate = document.querySelector("#inpBirthDate").value;
+            const birthYear = parseInt(birthDate.substring(0, 4));
+            const birthMonth = parseInt(birthDate.substring(4, 6));
+            const birthDay = parseInt(birthDate.substring(6, 8));
+            let age = date.getFullYear() - birthYear;
+            if (birthMonth > date.getMonth() + 1) {
+                age--;
+            } else if (birthMonth == date.getMonth() + 1) {
+                if (birthDay > date.getDate()) {
+                    age--;
+                }
+            }
+            const yearAge = date.getFullYear() - birthYear;
+            const koreanTraditionalAge = date.getFullYear() - birthYear + 1;
+            const ageOffset = koreanTraditionalAge - age;
+            calAge[0].textContent = calAge[1].textContent = age;
+            calYearAge[0].textContent = calYearAge[1].textContent = yearAge;
+            spanKoreanTraditionalAge.textContent = koreanTraditionalAge;
+            ageOffsetSpan.textContent = ageOffset;
+            result.classList.toggle("hidden");
+            moreArticle.classList.toggle("hidden");
+            thanks.classList.toggle("hidden");
+        };
+        form.addEventListener("submit", handleSubmit);
+    </script>
+</body>
+</html>
