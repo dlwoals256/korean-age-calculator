@@ -72,19 +72,43 @@
             font-size: 25px;
         }
         .intro {
-            height: 20vh;
             font-size: 18px;
         }
         .moreArticle {
-            height: 20vh;
             font-size: 18px;
         }
         .thanks {
             font-size: 25px;
             text-align: center;
+            padding: 30px;
         }
         .hidden {
             display: none !important;
+        }
+
+        @media screen and (max-width: 400px) {
+            .intro {
+                font-size: 16px;
+            }
+            header {
+                display: flex;
+                flex-flow: row wrap;
+                align-items: center;
+                height: 15vh;
+            }
+            .title {
+                padding: 0;
+                text-align: center;
+            }
+            .result > p:first-child {
+                font-size: 24px;
+            }
+            .result > p:last-child {
+                font-size: 18px;
+            }
+            .moreArticle {
+                font-size: 16px;
+            }
         }
     </style>
 </head>
@@ -117,6 +141,7 @@
                     다만, 1세에 이르지 아니한 경우에는 월수(月數)로 표시할 수 있다.
                     [전문개정 2022. 12. 27.] [시행일: 2023. 6. 28.]
                 </p>
+                <br>
                 <p>
                     지난 2023년 06월 28일부터 시행되는 나이의 계산과 표시에 대한 민법 제158조에
                     의해 대한민국에서 "세는 나이"가 사라졌습니다.
@@ -127,6 +152,7 @@
                 </p>
             </div>
             <div class="moreArticle">
+                <br>
                 <p>
                     연 나이는 무엇일까요?
                     연 나이 역시 나이를 세는 방법 중 하나로, 그저 현재 연도에서 출생 연도를
