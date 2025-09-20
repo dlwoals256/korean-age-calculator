@@ -3,111 +3,174 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>만 나이: 오늘부터 당신의 나이는?</title>
+    <title>만 나이 계산기</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Nanum+Gothic&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700&display=swap" rel="stylesheet">
     <style>
+        /* --- 기본 스타일 초기화 --- */
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: 'Nanum Gothic', sans-serif;
         }
-        #wrap {
-            width: 90vw;
-            margin: 30px auto 0 auto;
-            background-color: #e0e0e0;
-            padding: 20px;
-        }
-        header {
-            height: 15vh;
-        }
-        .title {
-            display: inline-block;
-            width: 100%;
-            padding: 30px 0 0 30px;
-            font-size: 35px;
-        }
-        .calForm {
-            height: 12vh;
+
+        body {
+            font-family: 'Noto Sans KR', sans-serif;
+            background-color: #f0f2f5; /* 부드러운 배경색 */
             display: flex;
-            flex-flow: row wrap;
-            justify-content: center;
-        }
-        #inpBirthDate {
-            border: none;
-            width: 50vw;
-            height: 8vh;
-            border-radius: 30px;
-            background: #e0e0e0;
-            box-shadow:  8px 8px 8px #848484,
-             -8px -8px 8px #ffffff;
-            text-align: center;
-            font-size: 30px;
-        }
-        #inpBirthDate::placeholder {
-            font-size: 30px;
-            text-align: center;
-        }
-        .result {
-            height: 20vh;
-            display: flex;
-            flex-flow: row wrap;
             justify-content: center;
             align-items: center;
+            min-height: 100vh;
+            padding: 20px;
         }
-        .result > .calAge {
-            font-size: 40px;
-        }
-        .result > .calYearAge {
-            font-size: 30px;
-        }
-        .result > p:first-child {
+
+        /* --- 전체 래퍼 --- */
+        #wrap {
             width: 100%;
+            max-width: 600px; /* 최대 너비 설정 */
+            background-color: #ffffff;
+            border-radius: 16px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            padding: 40px;
+            transition: all 0.3s ease;
+        }
+
+        /* --- 헤더 --- */
+        header {
             text-align: center;
-            font-size: 35px;
+            margin-bottom: 30px;
         }
-        .result > p:last-child {
-            font-size: 25px;
+
+        .title {
+            font-size: 28px;
+            font-weight: 700;
+            color: #1c1e21;
         }
-        .intro {
+
+        /* --- 계산 폼 --- */
+        .calForm form {
+            display: flex;
+            gap: 10px; /* 입력창과 버튼 사이 간격 */
+        }
+
+        #inpBirthDate {
+            flex-grow: 1; /* 남은 공간을 모두 차지 */
+            border: 1px solid #dddfe2;
+            height: 50px;
+            border-radius: 8px;
+            padding: 0 20px;
             font-size: 18px;
+            transition: border-color 0.2s, box-shadow 0.2s;
         }
-        .moreArticle {
+
+        #inpBirthDate::placeholder {
+            color: #90949c;
+        }
+
+        #inpBirthDate:focus {
+            outline: none;
+            border-color: #007bff;
+            box-shadow: 0 0 0 2px rgba(0, 123, 255, 0.25);
+        }
+
+        #submitBtn {
+            height: 50px;
+            padding: 0 25px;
+            border: none;
+            border-radius: 8px;
+            background-color: #007bff;
+            color: white;
+            font-size: 16px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: background-color 0.2s;
+        }
+
+        #submitBtn:hover {
+            background-color: #0056b3;
+        }
+
+        /* --- 결과 섹션 --- */
+        .result-section {
+            margin-top: 30px;
+            padding: 25px;
+            background-color: #f7f8fa;
+            border-radius: 12px;
+            text-align: center;
+            opacity: 0; /* 기본적으로 숨김 */
+            transform: translateY(10px);
+            transition: opacity 0.5s ease, transform 0.5s ease;
+        }
+        
+        .result-section.visible {
+            opacity: 1; /* 보이게 처리 */
+            transform: translateY(0);
+        }
+
+        .result-section p {
             font-size: 18px;
+            color: #4b4f56;
+            line-height: 1.6;
         }
+
+        .result-section .calAge {
+            font-size: 2.5em; /* 상대 단위 사용 */
+            font-weight: 700;
+            color: #007bff;
+        }
+        
+        .result-section .calYearAge {
+            font-weight: 700;
+            color: #28a745
+        }
+
+        /* --- 추가 정보 섹션 --- */
+        .info-section {
+            margin-top: 30px;
+            font-size: 15px;
+            color: #606770;
+            line-height: 1.7;
+            border-top: 1px solid #e0e0e0;
+            padding-top: 25px;
+        }
+        
+        .info-section h3 {
+            font-size: 18px;
+            margin-bottom: 10px;
+            color: #1c1e21;
+        }
+        
+        .info-section .highlight {
+            font-weight: 700;
+            color: #dc3545;
+        }
+
         .thanks {
-            font-size: 25px;
             text-align: center;
-            padding: 30px;
+            margin-top: 30px;
+            font-size: 16px;
+            color: #606770;
         }
+
+        /* --- 숨김 클래스 --- */
         .hidden {
             display: none !important;
         }
 
-        @media screen and (max-width: 400px) {
-            .intro {
-                font-size: 16px;
+        /* --- 모바일 반응형 --- */
+        @media screen and (max-width: 480px) {
+            body {
+                padding: 10px;
             }
-            header {
-                display: flex;
-                flex-flow: row wrap;
-                align-items: center;
-                height: 15vh;
+            #wrap {
+                padding: 20px;
             }
             .title {
-                padding: 0;
-                text-align: center;
-            }
-            .result > p:first-child {
                 font-size: 24px;
             }
-            .result > p:last-child {
-                font-size: 18px;
-            }
-            .moreArticle {
-                font-size: 16px;
+            .calForm form {
+                flex-direction: column; /* 세로 정렬 */
             }
         }
     </style>
@@ -117,99 +180,98 @@
         <header>
             <h2 class="title">만 나이 계산기</h2>
         </header>
-        <article>
+        <main>
             <div class="calForm">
-                <form action="">
-                    <input type="text" id="inpBirthDate" name="birthDate" placeholder="YYYYMMDD"
-                    pattern="(?:19|20)\d\d(?:0[1-9]|1[012])(?:0[1-9]|[12][0-9]|3[01])"
-                    title="YYYYMMDD 형식에 맞게 입력해주세요."/>
-
+                <form id="ageForm">
+                    <input type="text" id="inpBirthDate" name="birthDate" placeholder="생년월일 8자리 (YYYYMMDD)"
+                           pattern="(19|20)\d{2}(0[1-9]|1[0-2])(0[1-9]|[12]\d|3[01])"
+                           title="YYYYMMDD 형식에 맞게 8자리로 입력해주세요." required />
+                    <button type="submit" id="submitBtn">계산하기</button>
                 </form>
             </div>
-            <div class="result">
-                <p>
-                    당신의 생일에 근거한 만 나이는 <span class="calAge"></span>세입니다!
-                </p>
-                <p>
-                    연 나이는 <span class="calYearAge"></span>세입니다!
-                </p>
+            
+            <div id="resultContainer" class="hidden">
+                <section class="result-section">
+                    <p>당신의 만 나이는</p>
+                    <p><span class="calAge"></span>세 입니다!</p>
+                    <p>(연 나이: <span class="calYearAge"></span>세)</p>
+                </section>
+
+                <section class="info-section">
+                    <h3>'세는 나이'와 '만 나이'</h3>
+                    <p>
+                        과거 우리가 흔히 사용하던 '세는 나이'(<span class="koreanTraditionalAge highlight"></span>살)는 태어나자마자 한 살이 되고, 해가 바뀔 때마다 한 살씩 더하는 방식이었습니다. 
+                        하지만 이제 법적으로 <span style="font-weight: bold;">'만 나이'</span>가 통일되어, 생일을 기준으로 나이를 계산합니다.
+                        덕분에 당신은 <span class="ageOffset highlight"></span>살 더 젊어졌어요! (기분 좋게 말이죠!)
+                    </p>
+                </section>
+
+                <div class="thanks">
+                    <p>이용해주셔서 감사합니다!</p>
+                </div>
             </div>
-            <div class="intro">
-                <p>
-                    <span style="font-weight: bold;"> 개정후 민법 제158조(나이의 계산과 표시) </span>
-                    나이는 출생일을 산입하여 만(滿) 나이로 계산하고, 연수(年數)로 표시한다.
-                    다만, 1세에 이르지 아니한 경우에는 월수(月數)로 표시할 수 있다.
-                    [전문개정 2022. 12. 27.] [시행일: 2023. 6. 28.]
-                </p>
-                <br>
-                <p>
-                    지난 2023년 06월 28일부터 시행되는 나이의 계산과 표시에 대한 민법 제158조에
-                    의해 대한민국에서 "세는 나이"가 사라졌습니다.
-                    물론 공식적인 전산 상에서는 만 나이를 사용해왔으나 우리의 일상 속에서
-                    세는 나이는 오랫동안 자리매김 하고 있었습니다.
-                    일상에서도 이젠 만 나이를 사용하기 위한 정부의 노력에 힘입어
-                    여러분의 만 나이 계산을 도와드리겠습니다.
-                </p>
-            </div>
-            <div class="moreArticle">
-                <br>
-                <p>
-                    연 나이는 무엇일까요?
-                    연 나이 역시 나이를 세는 방법 중 하나로, 그저 현재 연도에서 출생 연도를
-                    단순히 빼기만 하면 그것이 연 나이입니다.
-                    (당신은 연 나이로 <span class="calYearAge"></span>살 입니다!)
-                    법적으로는 특정 법률에서만 사용되나 계산법이 간단해
-                    일상에서 쓰기 좋습니다. 생일이 지났는지 알 수 없거나 알지 않아도 되는
-                    상황에서는 편의상 이런 방식을 사용하기도 합니다.
-                    일상에서 당신은 <span class="koreanTraditionalAge"></span>살로 소개하곤
-                    했지만 이제 당신은 <span class="calAge"></span>살로, 
-                    <span class="ageOffset"></span>살 만큼 젊어졌어요! (물론 생물학적으로가 아닙니다.)
-                </p>
-            </div>
-            <div class="thanks">
-                <p>방문해주셔서 감사하고 좋은 하루 되세요!</p>
-            </div>
-        </article>
+        </main>
     </div>
     <script>
-        const date = new Date();
-        const form = document.querySelector("form");
-        const calAge = document.querySelectorAll(".calAge");
-        const calYearAge = document.querySelectorAll(".calYearAge");
-        const spanKoreanTraditionalAge = document.querySelector(".koreanTraditionalAge");
-        const result = document.querySelector(".result");
-        const moreArticle = document.querySelector(".moreArticle");
-        const thanks = document.querySelector(".thanks");
+        const ageForm = document.getElementById("ageForm");
+        const resultContainer = document.getElementById("resultContainer");
+        
+        // 결과가 표시될 모든 span 요소들
+        const calAgeSpans = document.querySelectorAll(".calAge");
+        const calYearAgeSpans = document.querySelectorAll(".calYearAge");
+        const koreanTraditionalAgeSpan = document.querySelector(".koreanTraditionalAge");
         const ageOffsetSpan = document.querySelector(".ageOffset");
-        result.classList.toggle("hidden");
-        moreArticle.classList.toggle("hidden");
-        thanks.classList.toggle("hidden");
+        
+        // 결과 섹션 (애니메이션용)
+        const resultSection = document.querySelector('.result-section');
+
         const handleSubmit = e => {
-            e.preventDefault();
-            const birthDate = document.querySelector("#inpBirthDate").value;
-            const birthYear = parseInt(birthDate.substring(0, 4));
-            const birthMonth = parseInt(birthDate.substring(4, 6));
-            const birthDay = parseInt(birthDate.substring(6, 8));
-            let age = date.getFullYear() - birthYear;
-            if (birthMonth > date.getMonth() + 1) {
-                age--;
-            } else if (birthMonth == date.getMonth() + 1) {
-                if (birthDay > date.getDate()) {
-                    age--;
-                }
+            e.preventDefault(); // 폼 제출 시 새로고침 방지
+
+            const birthDateStr = document.getElementById("inpBirthDate").value;
+            if (!birthDateStr || !/^(19|20)\d{6}$/.test(birthDateStr)) {
+                return; // 유효하지 않은 입력이면 중단
             }
-            const yearAge = date.getFullYear() - birthYear;
-            const koreanTraditionalAge = date.getFullYear() - birthYear + 1;
+
+            const birthYear = parseInt(birthDateStr.substring(0, 4));
+            const birthMonth = parseInt(birthDateStr.substring(4, 6));
+            const birthDay = parseInt(birthDateStr.substring(6, 8));
+
+            const today = new Date();
+            const currentYear = today.getFullYear();
+            const currentMonth = today.getMonth() + 1; // getMonth()는 0부터 시작
+            const currentDay = today.getDate();
+
+            // 1. 만 나이 계산
+            let age = currentYear - birthYear;
+            // 생일이 지나지 않았으면 1을 뺌
+            if (birthMonth > currentMonth || (birthMonth === currentMonth && birthDay > currentDay)) {
+                age--;
+            }
+
+            // 2. 연 나이 계산 (현재 연도 - 출생 연도)
+            const yearAge = currentYear - birthYear;
+            
+            // 3. 세는 나이 (한국식 나이)
+            const koreanTraditionalAge = currentYear - birthYear + 1;
+
+            // 4. 세는 나이와 만 나이의 차이
             const ageOffset = koreanTraditionalAge - age;
-            calAge[0].textContent = calAge[1].textContent = age;
-            calYearAge[0].textContent = calYearAge[1].textContent = yearAge;
-            spanKoreanTraditionalAge.textContent = koreanTraditionalAge;
+
+            // 계산된 나이를 화면에 표시
+            calAgeSpans.forEach(span => span.textContent = age);
+            calYearAgeSpans.forEach(span => span.textContent = yearAge);
+            koreanTraditionalAgeSpan.textContent = koreanTraditionalAge;
             ageOffsetSpan.textContent = ageOffset;
-            result.classList.toggle("hidden");
-            moreArticle.classList.toggle("hidden");
-            thanks.classList.toggle("hidden");
+
+            // 결과 컨테이너를 부드럽게 보이도록 처리
+            resultContainer.classList.remove("hidden");
+            // 강제로 리플로우를 발생시켜 애니메이션이 다시 동작하도록 함
+            void resultSection.offsetWidth; 
+            resultSection.classList.add('visible');
         };
-        form.addEventListener("submit", handleSubmit);
+
+        ageForm.addEventListener("submit", handleSubmit);
     </script>
 </body>
 </html>
